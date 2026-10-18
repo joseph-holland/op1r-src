@@ -54,3 +54,26 @@ with creator credit and source records retained in the GIN project.
 This op1r integration directory is GPL-3.0-or-later with the OP-1 firmware
 permission in the repository's `NOTICE`. The separately maintained MIT core
 keeps its own licence. A GPL-linked plugin must not be labelled MIT-only.
+
+## Independence And Trademarks
+
+GIN and these mods are independently developed by Squarewave Studio. They are
+not affiliated with, authorised by, sponsored by or endorsed by Teenage
+Engineering AB or Sonic Charge / NuEdge Development AB.
+
+OP-1, Pocket Operator, PO-32, Tonic and Teenage Engineering are names and
+trademarks of Teenage Engineering AB. Microtonic, µTonic and Sonic Charge are
+names and trademarks of NuEdge Development AB. They are used only to identify
+compatible devices, software and formats. All trademarks belong to their
+respective owners. No ownership of those names or endorsement is claimed.
+
+Code, content and trademark rights are separate. A compatibility statement,
+credit or disclaimer does not grant permission to redistribute proprietary
+source, firmware, fonts, presets or other assets.
+
+No GIN DSP core, factory-kit data, stock firmware, font data or proprietary
+Teenage Engineering/Sonic Charge source is included in this adapter directory.
+A future core import must have file-level provenance and redistribution terms;
+MIT attribution alone does not establish an independent origin for copied code
+or tables. Never import proprietary SDK/library source, decompiled implementations
+or code/data copied from vendor binaries.
