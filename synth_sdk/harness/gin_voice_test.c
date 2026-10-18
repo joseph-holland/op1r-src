@@ -134,6 +134,27 @@ int main(void)
     op1_drum_synth_voice_t fifth=context(4,0,4);
     assert(gin_plugin_voice_begin(&bank,&fifth,&p,&bypass,0,&untouched)==GIN_PLUGIN_CAPACITY);
     assert(!memcmp(&saved,&bank,sizeof bank));
+    /* Reusing an occupied receiver index cannot erase another slot's hit. */
+    untouched=123;
+    op1_drum_synth_voice_t reused=context(0,0,5);
+    assert(gin_plugin_voice_begin(&bank,&reused,&p,&bypass,0,&untouched)==GIN_PLUGIN_CAPACITY);
+    assert(untouched==123 && !memcmp(&saved,&bank,sizeof bank));
+    /* The same rule applies below the four-DSP limit and to remaining tails. */
+    gin_plugin_voices_init(&bank);
+    op1_drum_synth_voice_t owner=context(0,1,0);
+    assert(!gin_plugin_voice_begin(&bank,&owner,&p,&bypass,0,&to));
+    saved=bank;
+    assert(gin_plugin_voice_begin(&bank,&reused,&p,&bypass,0,&untouched)==GIN_PLUGIN_CAPACITY);
+    assert(untouched==123 && !memcmp(&saved,&bank,sizeof bank));
+    bank.voice[0].dsp.active=0;bank.voice[0].drain=1;saved=bank;
+    assert(gin_plugin_voice_begin(&bank,&reused,&p,&bypass,0,&untouched)==GIN_PLUGIN_CAPACITY);
+    assert(untouched==123 && !memcmp(&saved,&bank,sizeof bank));
+    bank.voice[0].drain=0;bank.voice[0].fade_left=1;saved=bank;
+    assert(gin_plugin_voice_begin(&bank,&reused,&p,&bypass,0,&untouched)==GIN_PLUGIN_CAPACITY);
+    assert(untouched==123 && !memcmp(&saved,&bank,sizeof bank));
+    gin_plugin_voices_retire(&bank,1);
+    assert(!gin_plugin_voice_begin(&bank,&reused,&p,&bypass,0,&untouched));
+    assert(gin_plugin_voice_active(&bank,&reused,untouched));
     bank.choke.serial=UINT32_MAX;saved=bank;
     assert(gin_plugin_voice_begin(&bank,&a,&p,&bypass,0,&untouched)==GIN_PLUGIN_EXHAUSTED);
     assert(!memcmp(&saved,&bank,sizeof bank));

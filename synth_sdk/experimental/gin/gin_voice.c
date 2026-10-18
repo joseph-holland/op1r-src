@@ -49,6 +49,10 @@ int gin_plugin_voice_begin(gin_plugin_voices *b, const op1_drum_synth_voice_t *c
         return GIN_PLUGIN_ARGUMENT;
     if (b->choke.serial == UINT32_MAX) return GIN_PLUGIN_EXHAUSTED;
     gin_plugin_voice *v = &b->voice[c->voice];
+    /* A receiver index is bank-wide. Reuse must not overwrite another slot's
+     * live DSP, reconstruction drain or declick tail, even below capacity.
+     * The host must retire that slot or wait for its sound to finish first. */
+    if (sounding(v) && v->context.slot != c->slot) return GIN_PLUGIN_CAPACITY;
     unsigned full = 0, same_slot = 0;
     for (unsigned i = 0; i < OP1_DRUM_SYNTH_VOICES; i++) {
         if (!b->voice[i].dsp.active) continue;
