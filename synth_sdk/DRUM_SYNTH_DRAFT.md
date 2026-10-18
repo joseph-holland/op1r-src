@@ -56,6 +56,31 @@ bounded 64-bit product on key-up. The per-sample path has no divide, modulo,
 64-bit operation, floating point or allocation. Target compilation is not a
 device timing or interrupt-safety qualification.
 
+## Choke-group ownership
+
+`drumsynth/ds_choke.*` is an optional helper for synthesised drum plugins. Each
+plugin instance owns a bank; each of its 24 keys can assign group 0 (off) or
+1..8 (mutually exclusive). The assignment is kit state and belongs in the
+plugin's versioned preset extension and controls, not in Drum+'s sampler fields.
+Default all assignments to zero when reading older kits. It is not yet wired
+into GIN's editor, codec or renderer.
+
+Invoke the helper only after a new hit has successfully latched. It returns
+which older voices in the same slot and group should be choked. The engine
+starts a bounded declick fade for those voices, independently of gate/one-shot
+key-up policy. Its existing same-key retrigger and stealing policies still
+apply. Group matching does not choke other slots or other plugin instances.
+A sounding hit retains its original group if the pad setting is edited later.
+Already requested fades are not restarted by successive group triggers.
+
+The helper's victim mask is a request, not a claim that audio stopped. The engine
+calls `finished` with the hit token after synthesis and its actual fade end.
+A stale completion cannot clear a newer hit using the same receiver index.
+Tokens are local bookkeeping, not native receiver admission. Slot forgetting
+requires the engine to have actually retired those voices first. Invalid input
+or token exhaustion preserves the helper and output unchanged. Native lifetime,
+actual fading, controls and saved-state reload remain integration tests.
+
 ## Next integration checkpoint
 
 1. Wire real DBox factory/binding and render/note-on/status/note-off callbacks

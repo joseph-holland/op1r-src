@@ -22,6 +22,7 @@ def main():
         for name, files in [
             ('registry-envelope', ['harness/drumsynth_test.c', 'drumsynth/ds_registry.c', 'drumsynth/ds_envelope.c']),
             ('file-parser', ['harness/drumsynth_file_test.c', 'plugload/op1p_load.c']),
+            ('choke-groups', ['harness/drumsynth_choke_test.c', 'drumsynth/ds_choke.c']),
         ]:
             exe = tmp / name
             subprocess.run(common + [str(SDK / f) for f in files] + ['-o', str(exe)], check=True, timeout=30)
