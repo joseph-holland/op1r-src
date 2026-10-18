@@ -39,8 +39,8 @@ about 23 ms, rather than a full-tail listening test. It also checks overlap,
 retriggering, stale releases, gate release, choke fades, voice limits and slot
 retirement under AddressSanitizer and UndefinedBehaviorSanitizer.
 
-The GIN DSP, factory bank, current editor and save codec remain in their separate
-source tree. This draft does not include those files or change the working
+The [standalone source](standalone/README.md) includes GIN's DSP, factory bank,
+editor and save codec. This draft does not include those files or change the working
 firmware build. Native loading, complete saved-state recovery, screens and
 emulator testing are the next integration steps.
 

@@ -1,0 +1,55 @@
+{
+  "creator": "CNTR RNDM",
+  "sources": [
+    {
+      "name": "TR-808",
+      "creator": "CNTR RNDM",
+      "url": "https://www.youtube.com/watch?v=NCpdgl2XTQg",
+      "permission_statement": "All my samples and kits are copyright free"
+    },
+    {
+      "name": "TR-909",
+      "creator": "CNTR RNDM",
+      "url": "https://www.youtube.com/watch?v=KkP-wjFzbkU",
+      "permission_statement": "All my samples and kits are copyright free"
+    },
+    {
+      "name": "LINNDRUM",
+      "creator": "CNTR RNDM",
+      "url": "https://www.youtube.com/watch?v=EdQ-7AO6Ee4",
+      "permission_statement": "All my samples and kits are copyright free"
+    },
+    {
+      "name": "UK GARAGE",
+      "creator": "CNTR RNDM",
+      "url": "https://www.youtube.com/watch?v=SjM86hzAhwE",
+      "permission_statement": "All my samples and kits are copyright free"
+    },
+    {
+      "name": "DETROIT TECHNO",
+      "creator": "CNTR RNDM",
+      "url": "https://www.youtube.com/watch?v=8ODdXcNKk0M",
+      "permission_statement": "All my samples and kits are copyright free"
+    },
+    {
+      "name": "ULTRA DEEP",
+      "creator": "CNTR RNDM",
+      "url": "https://www.youtube.com/watch?v=yvvRyDitgH4",
+      "permission_statement": "All my samples and kits are copyright free"
+    },
+    {
+      "name": "DRUMS DISTORTION",
+      "creator": "CNTR RNDM",
+      "url": "https://www.youtube.com/watch?v=voIoiilVLz8",
+      "permission_statement": "All my samples and kits are copyright free"
+    },
+    {
+      "name": "EXTREME",
+      "creator": "CNTR RNDM",
+      "url": "https://www.youtube.com/watch?v=6iBT1FhD73Q",
+      "permission_statement": "All my samples and kits are copyright free"
+    }
+  ],
+  "adaptation": "GIN maps the original sound pairs to24keys and adds variations. No endorsement is claimed.",
+  "terms": "Creator-published permission, not a Creative Commons licence. Credits retained."
+}

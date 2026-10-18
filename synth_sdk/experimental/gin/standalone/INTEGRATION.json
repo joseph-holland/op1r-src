@@ -1,0 +1,235 @@
+{
+  "schema": "gin.native-op1-246.integration.v1",
+  "device": "original OP-1",
+  "firmware": "exact #246",
+  "upstream_sdk": {
+    "repository": "https://github.com/pcppcp/op1r-src",
+    "revision": "8f98535d88232ccf42f4f7a8b2e459b47ecfd993",
+    "drum_source_api": 1
+  },
+  "code_region": [
+    "0x01e00000",
+    "0x01e40000"
+  ],
+  "bss_region": [
+    "0x01ec0000",
+    "0x01ef0000"
+  ],
+  "code_bytes": 253736,
+  "bss_bytes": 194128,
+  "native_receivers": 12,
+  "synthesis_voice_limit": 4,
+  "audio": {
+    "synthesis_rate": 44100,
+    "core_samples_per_callback": 64,
+    "native_samples_per_callback": 128,
+    "reconstruction": "33-tap 2x FIR",
+    "native_consumption_rate": 88200,
+    "same_sound_mono_choke": true
+  },
+  "profile_enabled": false,
+  "hooks": [
+    {
+      "group": "dbox-vtable-pointer",
+      "address": "0x0190f8b8",
+      "bytes": 4,
+      "target": "_gin_fw_entry_render",
+      "original_function": "0x01970ee8",
+      "pinned_op1r_site_conflict": false
+    },
+    {
+      "group": "dbox-vtable-pointer",
+      "address": "0x0190f8c0",
+      "bytes": 4,
+      "target": "_gin_fw_entry_trigger",
+      "original_function": "0x01970de6",
+      "pinned_op1r_site_conflict": false
+    },
+    {
+      "group": "dbox-vtable-pointer",
+      "address": "0x0190f8c8",
+      "bytes": 4,
+      "target": "_gin_fw_entry_status",
+      "original_function": "0x01970e5c",
+      "pinned_op1r_site_conflict": false
+    },
+    {
+      "group": "dbox-vtable-pointer",
+      "address": "0x0190f8d0",
+      "bytes": 4,
+      "target": "_gin_fw_entry_release",
+      "original_function": "0x01970e7e",
+      "pinned_op1r_site_conflict": false
+    },
+    {
+      "section": ".patch_preset_select",
+      "group": "preset",
+      "address": "0x0193f5c2",
+      "bytes": 4,
+      "target": "_gin_fw_browser_preset_copy",
+      "next_stock_address": "0x0193f5c6",
+      "pinned_op1r_site_conflict": false,
+      "original_call_target": "0x01a04c48"
+    },
+    {
+      "section": ".patch_factory",
+      "group": "native-entry",
+      "address": "0x01967984",
+      "bytes": 14,
+      "target": "_gin_fw_entry_factory_parent",
+      "next_stock_address": "0x01967992",
+      "pinned_op1r_site_conflict": false
+    },
+    {
+      "section": ".patch_database",
+      "group": "native-entry",
+      "address": "0x0196f6b4",
+      "bytes": 16,
+      "target": "_gin_fw_entry_database_open",
+      "next_stock_address": "0x0196f6c4",
+      "pinned_op1r_site_conflict": false,
+      "original_prefix_continuation": "0x0196f6c4"
+    },
+    {
+      "section": ".patch_snapshot_read",
+      "group": "snapshot",
+      "address": "0x019ad554",
+      "bytes": 4,
+      "target": "_gin_fw_snapshot_read_entry",
+      "next_stock_address": "0x019ad558",
+      "pinned_op1r_site_conflict": false,
+      "original_call_target": "0x01995bac"
+    },
+    {
+      "section": ".patch_snapshot_slot_save",
+      "group": "snapshot",
+      "address": "0x019ad776",
+      "bytes": 4,
+      "target": "_gin_fw_snapshot_slot_save",
+      "next_stock_address": "0x019ad77a",
+      "pinned_op1r_site_conflict": false,
+      "original_call_target": "0x01995c88"
+    },
+    {
+      "section": ".patch_name",
+      "group": "native-entry",
+      "address": "0x019b975c",
+      "bytes": 12,
+      "target": "_gin_fw_entry_name_compare",
+      "next_stock_address": "0x019b9768",
+      "pinned_op1r_site_conflict": true
+    },
+    {
+      "section": ".patch_type",
+      "group": "native-entry",
+      "address": "0x019b9810",
+      "bytes": 14,
+      "target": "_gin_fw_entry_type",
+      "next_stock_address": "0x019b981e",
+      "pinned_op1r_site_conflict": false,
+      "original_prefix_continuation": "0x019b981e"
+    },
+    {
+      "section": ".patch_ui_key",
+      "group": "gui",
+      "address": "0x019c2d3e",
+      "bytes": 4,
+      "target": "_gin_ui_entry_key",
+      "next_stock_address": "0x019c2d42",
+      "pinned_op1r_site_conflict": true,
+      "original_call_target": "0x019b6c74"
+    },
+    {
+      "section": ".patch_ui_knob",
+      "group": "gui",
+      "address": "0x019c2e94",
+      "bytes": 4,
+      "target": "_gin_ui_entry_knob",
+      "next_stock_address": "0x019c2e98",
+      "pinned_op1r_site_conflict": true,
+      "original_call_target": "0x019b6c0c"
+    },
+    {
+      "section": ".patch_ui_load",
+      "group": "gui",
+      "address": "0x019f07d2",
+      "bytes": 4,
+      "target": "_gin_ui_entry_load",
+      "next_stock_address": "0x019f07d6",
+      "pinned_op1r_site_conflict": true,
+      "original_call_target": "0x01a3ba50"
+    },
+    {
+      "section": ".patch_working_slot_tick",
+      "group": "working-slot",
+      "address": "0x019f0a3c",
+      "bytes": 4,
+      "target": "_gin_fw_working_tick",
+      "next_stock_address": "0x019f0a40",
+      "pinned_op1r_site_conflict": false,
+      "original_call_target": "0x019ad090"
+    },
+    {
+      "section": ".patch_preset_save",
+      "group": "preset",
+      "address": "0x019fffba",
+      "bytes": 4,
+      "target": "_gin_fw_json_dbox",
+      "next_stock_address": "0x019fffbe",
+      "pinned_op1r_site_conflict": false,
+      "original_call_target": "0x019bdea4"
+    },
+    {
+      "section": ".patch_preset_load",
+      "group": "preset",
+      "address": "0x01a00630",
+      "bytes": 4,
+      "target": "_gin_fw_json_dbox",
+      "next_stock_address": "0x01a00634",
+      "pinned_op1r_site_conflict": false,
+      "original_call_target": "0x019bdea4"
+    },
+    {
+      "section": ".patch_snapshot_normalize",
+      "group": "snapshot",
+      "address": "0x01a037a8",
+      "bytes": 4,
+      "target": "_gin_fw_normalize",
+      "next_stock_address": "0x01a037ac",
+      "pinned_op1r_site_conflict": false,
+      "original_prefix_continuation": "0x01a037ac"
+    },
+    {
+      "section": ".patch_preset_catalog",
+      "group": "preset",
+      "address": "0x01a0502a",
+      "bytes": 4,
+      "target": "_gin_fw_factory_preset_query",
+      "next_stock_address": "0x01a0502e",
+      "pinned_op1r_site_conflict": false,
+      "original_call_target": "0x0196fe8c"
+    },
+    {
+      "section": ".patch_ui_ctor",
+      "group": "gui",
+      "address": "0x01a3bd58",
+      "bytes": 4,
+      "target": "_gin_ui_entry_ctor",
+      "next_stock_address": "0x01a3bd5c",
+      "pinned_op1r_site_conflict": true,
+      "original_call_target": "0x019ba2f8"
+    },
+    {
+      "section": ".patch_ui_select",
+      "group": "gui",
+      "address": "0x01a3bfee",
+      "bytes": 6,
+      "target": "_gin_ui_entry_select",
+      "next_stock_address": "0x01a3bff4",
+      "pinned_op1r_site_conflict": false,
+      "return_protocol": "Retain native family9 frame; P0=[FP+4], UNLINK, JUMP(P0)"
+    }
+  ],
+  "binary_preimages": "Not included; generate from user-supplied hash-qualified stock input",
+  "compatibility": "Standalone exact#246 accepted. Other CFW composition not verified; hook sites and code/BSS namespace must have a single owner."
+}
