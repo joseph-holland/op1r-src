@@ -3,6 +3,7 @@
 #pragma GCC optimize ("Os", "no-tree-loop-distribute-patterns")   /* boot-time code: size */
 #include "op1p.h"
 #include "op1p_load.h"
+#include "../op1_drum_synth.h"
 
 static uint32_t rd32(const uint8_t *p) { return p[0] | p[1] << 8 | p[2] << 16 | (uint32_t)p[3] << 24; }
 
@@ -29,7 +30,7 @@ int op1p_parse(const uint8_t *file, uint32_t len, op1p_view *v)
     const op1p_hdr *h = (const op1p_hdr *)(file + bin_off);
     if (h->magic != OP1P_MAGIC) return OP1P_E_MAGIC;
     if (h->format != OP1P_FORMAT || h->api != OP1P_API) return OP1P_E_VERSION;
-    if (h->kind > OP1P_TOOL) return OP1P_E_HEADER;
+    if (h->kind > OP1P_DRUM_SYNTH) return OP1P_E_HEADER;
     int nl = 0;
     while (nl < 16 && h->name[nl]) {
         char c = h->name[nl++];
@@ -45,6 +46,15 @@ int op1p_parse(const uint8_t *file, uint32_t len, op1p_view *v)
     if (h->entry_off > h->image_size - 4 || (h->screen_off != OP1P_NO_SCREEN && h->screen_off > h->image_size - 4) ||
         h->entry_off & 3 || (h->screen_off != OP1P_NO_SCREEN && h->screen_off & 3))
         return OP1P_E_HEADER;
+    if (h->kind == OP1P_DRUM_SYNTH) {
+        /* The portable prefix is inspectable before relocation. The complete
+         * target descriptor must fit in the image, never in zeroed BSS. */
+        if (h->image_size < OP1_DRUM_SYNTH_TARGET_BYTES ||
+            h->entry_off > h->image_size - OP1_DRUM_SYNTH_TARGET_BYTES) return OP1P_E_HEADER;
+        const uint8_t *d = file + bin_off + sizeof(op1p_hdr) + h->entry_off;
+        if (rd32(d) != OP1_DRUM_SYNTH_ABI) return OP1P_E_VERSION;
+        if (rd32(d + 4) != OP1_DRUM_SYNTH_TARGET_BYTES || rd32(d + 8)) return OP1P_E_HEADER;
+    }
     v->hdr = h;
     v->image = (const uint8_t *)(h + 1);
     v->relocs = (const op1p_reloc *)(v->image + h->image_size);

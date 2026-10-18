@@ -339,6 +339,13 @@ static int load_one(void *db, const char *file)
     }
     if (!r && total + v.mem_size > TOTAL_CAP) r = OP1P_E_SIZE;
     int kind = r ? 0 : (int)v.hdr->kind;
+    /* A recognised draft container is not native engine admission. Until the
+     * DBox backend, preset recovery and UI lifetime are integrated, refuse it
+     * before allocation/registration. Never let it fall through to the FX path. */
+    if (!r && kind == OP1P_DRUM_SYNTH) {
+        if (buf) FREE(buf);
+        return OP1P_E_CAPABILITY;
+    }
     const char *name = r ? 0 : sdup(v.hdr->name);
     if (!r && kind == OP1P_SAMPLER) {                               /* sampler engine (sampler+): one, row id 100 */
         uint8_t *mem = op1_sampler ? 0 : MALLOC(v.mem_size);

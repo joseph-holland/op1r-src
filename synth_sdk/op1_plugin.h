@@ -333,4 +333,6 @@ static inline void op1_node_rotate(void *node, int32_t cx, int32_t cy, int32_t s
                      cx - ((cx * c - cy * s) >> 10), cy - ((cx * s + cy * c) >> 10), 1024 };
     op1_node_set_transform(node, m);
 }
+/* Draft synthesised-drum contract, separate from Drum+ sample playback. */
+#include "op1_drum_synth.h"
 #endif

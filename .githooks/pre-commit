@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+if [ "${SKIP_GITLEAKS:-}" = "1" ]; then
+  echo "pre-commit: SKIP_GITLEAKS=1, secret scan skipped" >&2
+elif command -v gitleaks >/dev/null 2>&1; then
+  gitleaks git --pre-commit --staged --redact --no-banner
+else
+  echo "pre-commit: gitleaks is required" >&2
+  exit 1
+fi

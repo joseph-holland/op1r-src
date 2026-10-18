@@ -28,6 +28,7 @@
 #define OP1P_DRUM     3              /* op1_drum_t (docs/43) */
 #define OP1P_SAMPLER  4              /* op1_sampler_t (docs/46) */
 #define OP1P_TOOL     5              /* op1_tool_t */
+#define OP1P_DRUM_SYNTH 6            /* LOCAL DRAFT, not an upstream kind assignment */
 #define OP1P_NO_SCREEN 0xFFFFFFFFu
 #define OP1P_F_USES_SAMPLE 1u
 #define OP1P_PREF(flags) (((flags) >> 8) & 0xFF)   /* preferred number (plugin.json order 1..31: keeps old sounds), 0 none */

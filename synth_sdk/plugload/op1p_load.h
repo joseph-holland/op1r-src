@@ -8,7 +8,7 @@
 #define OP1P_MAX_IMAGE    (512u * 1024)    /* per plugin, code + data and bss each */
 #define OP1P_MAX_IMPORTS  32
 
-enum { OP1P_E_SIZE = 1, OP1P_E_MAGIC, OP1P_E_CRC, OP1P_E_VERSION, OP1P_E_HEADER, OP1P_E_RELOC, OP1P_E_IMPORT };
+enum { OP1P_E_SIZE = 1, OP1P_E_MAGIC, OP1P_E_CRC, OP1P_E_VERSION, OP1P_E_HEADER, OP1P_E_RELOC, OP1P_E_IMPORT, OP1P_E_CAPABILITY };
 
 typedef struct {
     const op1p_hdr   *hdr;

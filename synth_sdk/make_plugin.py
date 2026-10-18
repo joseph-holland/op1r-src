@@ -19,7 +19,7 @@ CHECK_BASE = 0x0041A3C0
 IMP_FAKE = 0x0E000000                       # import addresses for the test links only (never loaded)
 OP1P_API = 1                                # = OP1_PLUGIN_API (op1_plugin.h)
 OP1P_ABS32, OP1P_HI16, OP1P_LO16, OP1P_IMPORT = 1, 2, 3, 0x80000000
-KINDS = {'synth': 0, 'fx': 1, 'seq': 2, 'drum': 3, 'sampler': 4, 'tool': 5}   # op1p.h OP1P_SYNTH / FX / SEQ / DRUM / SAMPLER / TOOL
+KINDS = {'synth': 0, 'fx': 1, 'seq': 2, 'drum': 3, 'sampler': 4, 'tool': 5, 'drum_synth': 6}  # drum_synth: LOCAL DRAFT kind, not assigned upstream
 R_LUIMM16, R_HUIMM16, R_BYTE4 = 6, 7, 0x12                 # binutils include/elf/bfin.h
 R_PCREL = {1, 3, 4, 8, 9, 0xA, 0xD, 0xE, 0x13}           # pc-relative: fine inside the image only
 LINK = """SECTIONS {{ . = {base:#x};
@@ -49,7 +49,7 @@ def find(name):
             e['screen'] = dict(p['screen'], svg=os.path.normpath(os.path.join(d, p['screen']['svg'])))
         return KINDS[p['kind']], e
     engs, fxs = plugins.load()
-    for kind, lst in ((0, engs), (1, fxs), (2, plugins.load_seqs()), (3, plugins.load_seqs('drum')), (4, plugins.load_seqs('sampler')), (5, plugins.load_seqs('tool'))):
+    for kind, lst in ((0, engs), (1, fxs), (2, plugins.load_seqs()), (3, plugins.load_seqs('drum')), (4, plugins.load_seqs('sampler')), (5, plugins.load_seqs('tool')), (6, plugins.load_seqs('drum_synth'))):
         for e in lst:
             if name in (e['name'], e['dir']):
                 return kind, e
@@ -129,8 +129,10 @@ def apply(img, rel, base, imp_addr):
     return img
 
 
-def build(name, out_dir=OUT):
+def build(name, out_dir=OUT, experimental_drum_synth=False):
     kind, e = find(name)
+    if kind == KINDS['drum_synth'] and not experimental_drum_synth:
+        raise SystemExit('drum_synth is a host-only draft; use --experimental-drum-synth for file tests only')
     srcs = [e['source']] + e['extra_sources']
     tag = e.get('dir') or os.path.basename(os.path.dirname(e['source']))
     w = f'build/plugins/{tag}'
@@ -190,9 +192,11 @@ def build(name, out_dir=OUT):
 
 if __name__ == '__main__':
     args = sys.argv[1:]
+    experimental = '--experimental-drum-synth' in args
+    args = [a for a in args if a != '--experimental-drum-synth']
     if args == ['--all']:
         args = [e['dir'] for e in sum(plugins.load(), []) + plugins.load_seqs() + plugins.load_seqs('drum') + plugins.load_seqs('sampler') + plugins.load_seqs('tool')]
     if not args:
         raise SystemExit(__doc__)
     for a in args:
-        build(a)
+        build(a, experimental_drum_synth=experimental)
